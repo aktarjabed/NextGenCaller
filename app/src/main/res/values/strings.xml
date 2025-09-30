@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NextGenCaller</string>
+
+    <!-- Permission strings -->
+    <string name="permission_camera_rationale">Camera permission is required for video calls</string>
+    <string name="permission_microphone_rationale">Microphone permission is required for calls</string>
+    <string name="permission_notification_rationale">Notification permission is required for incoming calls</string>
+    <string name="permission_denied">Permission denied. Please grant permissions in Settings.</string>
+
+    <!-- Call strings -->
+    <string name="incoming_call">Incoming Call</string>
+    <string name="incoming_video_call">Incoming Video Call</string>
+    <string name="incoming_audio_call">Incoming Audio Call</string>
+    <string name="outgoing_call">Calling…</string>
+    <string name="call_ringing">Ringing…</string>
+    <string name="call_connecting">Connecting…</string>
+    <string name="call_duration">%1$s</string>
+    <string name="call_ended">Call ended</string>
+    <string name="call_failed">Call failed</string>
+    <string name="call_missed">Missed call</string>
+
+    <!-- Button strings -->
+    <string name="answer">Answer</string>
+    <string name="reject">Reject</string>
+    <string name="decline">Decline</string>
+    <string name="end_call">End Call</string>
+    <string name="mute">Mute</string>
+    <string name="unmute">Unmute</string>
+    <string name="speaker">Speaker</string>
+    <string name="video">Video</string>
+    <string name="switch_camera">Switch Camera</string>
+    <string name="hold">Hold</string>
+    <string name="resume">Resume</string>
+
+    <!-- Navigation strings -->
+    <string name="home">Home</string>
+    <string name="contacts">Contacts</string>
+    <string name="history">History</string>
+    <string name="recents">Recents</string>
+    <string name="favorites">Favorites</string>
+    <string name="all">All</string>
+    <string name="missed">Missed</string>
+    <string name="incoming">Incoming</string>
+    <string name="outgoing">Outgoing</string>
+
+    <!-- Action strings -->
+    <string name="search">Search</string>
+    <string name="search_contacts">Search contacts…</string>
+    <string name="clear">Clear</string>
+    <string name="delete">Delete</string>
+    <string name="refresh">Refresh</string>
+    <string name="settings">Settings</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="view_all">View All</string>
+
+    <!-- Error messages -->
+    <string name="error_no_network">No network connection available</string>
+    <string name="error_call_failed">Call failed. Please try again.</string>
+    <string name="error_permission_denied">Required permissions not granted</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="error_loading_contacts">Failed to load contacts</string>
+    <string name="error_loading_history">Failed to load call history</string>
+    <string name="error_toggle_mute">Failed to toggle mute</string>
+    <string name="error_toggle_video">Failed to toggle video</string>
+    <string name="error_switch_camera">Failed to switch camera</string>
+
+    <!-- Status messages -->
+    <string name="no_recent_calls">No recent calls</string>
+    <string name="no_contacts">No contacts found</string>
+    <string name="no_results">No results found</string>
+    <string name="no_call_history">No call history</string>
+    <string name="network_unavailable">Network unavailable</string>
+    <string name="poor_connection">Poor connection quality</string>
+    <string name="connecting">Connecting…</string>
+
+    <!-- Dialog strings -->
+    <string name="dialog_clear_history_title">Clear call history?</string>
+    <string name="dialog_clear_history_message">This will delete all call history. This action cannot be undone.</string>
+    <string name="dialog_delete_contact_title">Delete contact?</string>
+    <string name="dialog_delete_contact_message">Are you sure you want to delete this contact?</string>
+    <string name="dialog_end_call_title">End call?</string>
+    <string name="dialog_end_call_message">Are you sure you want to end this call?</string>
+
+    <!-- Quality indicators -->
+    <string name="quality_excellent">Excellent</string>
+    <string name="quality_good">Good</string>
+    <string name="quality_fair">Fair</string>
+    <string name="quality_poor">Poor</string>
+    <string name="quality_disconnected">Disconnected</string>
+
+    <!-- Metrics -->
+    <string name="metric_packet_loss">Packet Loss</string>
+    <string name="metric_rtt">RTT</string>
+    <string name="metric_jitter">Jitter</string>
+    <string name="metric_fps">FPS</string>
+    <string name="metric_bandwidth">Bandwidth</string>
+
+    <!-- Notification strings -->
+    <string name="notification_channel_incoming_calls">Incoming Calls</string>
+    <string name="notification_channel_ongoing_calls">Ongoing Calls</string>
+    <string name="notification_channel_missed_calls">Missed Calls</string>
+    <string name="notification_ongoing_call">Ongoing call with %1$s</string>
+
+    <!-- Accessibility -->
+    <string name="content_description_profile_picture">Profile picture</string>
+    <string name="content_description_call_button">Call button</string>
+    <string name="content_description_video_call_button">Video call button</string>
+    <string name="content_description_favorite">Toggle favorite</string>
+    <string name="content_description_network_quality">Network quality indicator</string>
+</resources>
