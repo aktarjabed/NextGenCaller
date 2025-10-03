@@ -24,6 +24,12 @@ object WebRTCModule {
 
     @Provides
     @Singleton
+    fun provideCallQualityMonitor(scope: CoroutineScope): CallQualityMonitor {
+        return CallQualityMonitor(scope)
+    }
+
+    @Provides
+    @Singleton
     fun providePeerConnectionFactory(
         @ApplicationContext context: Context,
         eglBase: EglBase

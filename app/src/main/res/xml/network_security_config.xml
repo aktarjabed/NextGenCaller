@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
+    <!--
+        TODO: Replace 'yourdomain.com' with your actual domain and update the certificate pins.
+        The pins below are placeholders and must be replaced with the SHA-256 hashes of your server's public key certificates.
+        You should include pins for your primary certificate and at least one backup certificate.
+        You can generate the hashes using the following command:
+        openssl s_client -connect yourdomain.com:443 | openssl x509 -pubkey -noout | openssl rsa -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+    -->
     <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">yourdomain.com</domain>
-        <domain includeSubdomains="true">api.yourdomain.com</domain>
-        <domain includeSubdomains="true">signaling.yourdomain.com</domain>
+        <pin-set>
+            <pin digest="SHA-256">your_certificate_hash_1</pin>
+            <pin digest="SHA-256">your_certificate_hash_2</pin>
+        </pin-set>
     </domain-config>
-
-    <!-- Debug configuration -->
-    <debug-overrides>
-        <trust-anchors>
-            <certificates src="system" />
-            <certificates src="user" />
-        </trust-anchors>
-    </debug-overrides>
 </network-security-config>

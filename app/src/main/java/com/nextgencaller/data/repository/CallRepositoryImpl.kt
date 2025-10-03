@@ -20,7 +20,6 @@ import javax.inject.Singleton
 class CallRepositoryImpl @Inject constructor(
     private val signalingClient: SignalingClient,
     private val webRTCClient: WebRTCClient,
-    private val callQualityMonitor: CallQualityMonitor,
     private val callLogDao: CallLogDao,
     private val appScope: CoroutineScope
 ) : CallRepository {
@@ -28,8 +27,8 @@ class CallRepositoryImpl @Inject constructor(
     private val _callState = MutableStateFlow<CallState>(CallState.Idle)
     override val callState: StateFlow<CallState> = _callState.asStateFlow()
 
-    override val connectionQuality: StateFlow<ConnectionQuality> = callQualityMonitor.connectionQuality
-    override val qualityMetrics: StateFlow<QualityMetrics> = callQualityMonitor.qualityMetrics
+    override val connectionQuality: StateFlow<ConnectionQuality> = webRTCClient.connectionQuality
+    override val qualityMetrics: StateFlow<QualityMetrics> = webRTCClient.qualityMetrics
 
     private val _isMuted = MutableStateFlow(false)
     override val isMuted: StateFlow<Boolean> = _isMuted.asStateFlow()
@@ -202,7 +201,6 @@ class CallRepositoryImpl @Inject constructor(
 
         durationJob?.cancel()
         webRTCClient.close()
-        callQualityMonitor.stopMonitoring()
 
         val endTime = System.currentTimeMillis()
         val duration = if (callStartTime > 0) endTime - callStartTime else 0
@@ -245,7 +243,7 @@ class CallRepositoryImpl @Inject constructor(
     }
 
     private fun initializeWebRTC(isVideo: Boolean) {
-        val peerConnection = webRTCClient.initializePeerConnection(
+        webRTCClient.initializePeerConnection(
             onIceCandidate = { candidate ->
                 callDetails?.let {
                     signalingClient.sendIceCandidate(it.peerId, candidate)
@@ -268,7 +266,6 @@ class CallRepositoryImpl @Inject constructor(
         _isMuted.value = false
         _isVideoEnabled.value = isVideo
         _isSpeakerOn.value = isVideo // Speaker is on by default for video calls
-        peerConnection?.let { callQualityMonitor.startMonitoring(it) }
     }
 
     private suspend fun saveCallLog(details: CallDetails, status: CallStatus, duration: Long) {

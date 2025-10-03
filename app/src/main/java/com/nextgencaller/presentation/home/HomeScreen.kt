@@ -16,6 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.nextgencaller.R
 import com.nextgencaller.data.local.entity.CallDirection
 import com.nextgencaller.data.local.entity.CallLogEntity
 import com.nextgencaller.data.local.entity.CallStatus
@@ -30,12 +35,7 @@ fun HomeScreen(
     onNavigateToContacts: () -> Unit,
     onNavigateToHistory: () -> Unit
 ) {
-    val recentCalls by viewModel.recentCalls.collectAsState()
-    val favoriteContacts by viewModel.favoriteContacts.collectAsState()
-    val isNetworkAvailable by viewModel.isNetworkAvailable.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val error by viewModel.error.collectAsState()
-
+    val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
@@ -52,8 +52,8 @@ fun HomeScreen(
         }
     }
 
-    LaunchedEffect(error) {
-        error?.let {
+    LaunchedEffect(uiState.error) {
+        uiState.error?.let {
             snackbarHostState.showSnackbar(
                 message = it,
                 duration = SnackbarDuration.Short
@@ -67,7 +67,7 @@ fun HomeScreen(
             TopAppBar(
                 title = { Text("NextGenCaller") },
                 actions = {
-                    if (!isNetworkAvailable) {
+                    if (!uiState.isNetworkAvailable) {
                         Icon(
                             imageVector = Icons.Default.CloudOff,
                             contentDescription = "No network",
@@ -94,7 +94,7 @@ fun HomeScreen(
             }
         }
     ) { paddingValues ->
-        if (isLoading) {
+        if (uiState.isLoading) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -111,7 +111,7 @@ fun HomeScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                if (favoriteContacts.isNotEmpty()) {
+                if (uiState.favoriteContacts.isNotEmpty()) {
                     item {
                         Text(
                             text = "Favorites",
@@ -124,7 +124,7 @@ fun HomeScreen(
                         LazyRow(
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            items(favoriteContacts) { contact ->
+                            items(uiState.favoriteContacts) { contact ->
                                 FavoriteContactItem(
                                     contact = contact,
                                     onClick = {
@@ -157,34 +157,12 @@ fun HomeScreen(
                     }
                 }
 
-                if (recentCalls.isEmpty()) {
+                if (uiState.recentCalls.isEmpty()) {
                     item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 32.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.CallEnd,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(48.dp),
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                                Text(
-                                    text = "No recent calls",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            }
-                        }
+                        EmptyState()
                     }
                 } else {
-                    items(recentCalls) { callLog ->
+                    items(uiState.recentCalls) { callLog ->
                         RecentCallItem(
                             callLog = callLog,
                             onClick = {
@@ -200,6 +178,38 @@ fun HomeScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun EmptyState() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        // The Lottie animation `empty_box.json` is a placeholder.
+        // Please replace it with a real animation file.
+        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.empty_box))
+        LottieAnimation(
+            composition = composition,
+            iterations = LottieConstants.IterateForever,
+            modifier = Modifier.size(200.dp)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "No recent calls",
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Your call history will appear here.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 

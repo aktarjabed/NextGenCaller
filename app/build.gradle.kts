@@ -23,11 +23,17 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "SIGNALING_SERVER_URL", "\"wss://signaling.yourdomain.com\"")
-        buildConfigField("String", "API_BASE_URL", "\"https://api.yourdomain.com/\"")
-        buildConfigField("String", "TURN_SERVER_URL", "\"turn:turn.yourdomain.com:3478\"")
-        buildConfigField("String", "TURN_USERNAME", "\"nextgencaller_user\"")
-        buildConfigField("String", "TURN_CREDENTIAL", "\"your_secure_password\"")
+        val localProperties = java.util.Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localProperties.load(java.io.FileInputStream(localPropertiesFile))
+        }
+
+        buildConfigField("String", "SIGNALING_SERVER_URL", "\"${localProperties.getProperty("SIGNALING_SERVER_URL")}\"")
+        buildConfigField("String", "API_BASE_URL", "\"${localProperties.getProperty("API_BASE_URL")}\"")
+        buildConfigField("String", "TURN_SERVER_URL", "\"${localProperties.getProperty("TURN_SERVER_URL")}\"")
+        buildConfigField("String", "TURN_USERNAME", "\"${localProperties.getProperty("TURN_USERNAME")}\"")
+        buildConfigField("String", "TURN_CREDENTIAL", "\"${localProperties.getProperty("TURN_CREDENTIAL")}\"")
 
         kapt {
             arguments {
@@ -146,8 +152,14 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil-compose:2.5.0")
 
+    // Lottie
+    implementation("com.airbnb.android:lottie-compose:6.3.0")
+
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Security
+    implementation("androidx.security:security-crypto:1.0.0")
 
     // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.0")
