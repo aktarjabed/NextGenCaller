@@ -24,7 +24,7 @@ import com.nextgencaller.presentation.call.CallScreen
 import com.nextgencaller.presentation.contacts.ContactsScreen
 import com.nextgencaller.presentation.history.CallHistoryScreen
 import com.nextgencaller.presentation.home.HomeScreen
-import com.nextgencaller.presentation.theme.NextGenCallerTheme
+import com.nextgencaller.ui.theme.NextGenCallerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
